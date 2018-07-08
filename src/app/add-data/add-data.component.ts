@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
-import { Tax } from './tax';
+import {SubmitIncomeDto} from './submit-income-dto';
 
 @Component({
   selector: 'app-add-data',
@@ -10,8 +11,10 @@ import { Tax } from './tax';
 })
 export class AddDataComponent implements OnInit {
 
-  tax: Tax = new Tax();
-  Years = [2015, 2016, 2017, 2018];
+  tax: SubmitIncomeDto = new SubmitIncomeDto(); // remove
+  Years = [2012, 2013, 2014, 2015, 2016, 2017, 2018];
+  gross: number;
+  year: number;
 
   constructor(
     private api: ApiService,
@@ -21,23 +24,29 @@ export class AddDataComponent implements OnInit {
   ngOnInit() {
   }
 
-  calculateTax(superAnnuation, income, gross, year) {
-    const body = {
-      superAnnuation: superAnnuation,
+  calculateTax(superAnnuation, income) {
+    const body: SubmitIncomeDto = {
+      email: 'demo@email.com', // test account
+      superPercentage: parseFloat(superAnnuation),
       income: income,
-      gross: gross,
-      year: year,
+      type: this.gross,
+      year: this.year,
     };
-    console.log(body);
-}
-
-  onSubmit() {
-    console.log(this.tax);
-    this.api.submitData(this.tax)
+    this.api.submitData(JSON.stringify(body))
       .subscribe((result) => {
-        console.log(result);
         this.router.navigate(['dash']);
       });
-    }
+
+    //
+
+  }
+
+  onSelectGross(number) {
+    this.gross = number;
+  }
+
+  onSelectYear(year) {
+    this.year = year;
+  }
 
 }

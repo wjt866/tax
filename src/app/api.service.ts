@@ -34,14 +34,13 @@ export class ApiService {
 
     return this.http.post(
       `${environment.apiEndpoint}/tax-records`,
-      { data },
+      data,
       { headers }
     );
   }
 
   getData() {
     const headers = new HttpHeaders({
-
       // Auth headers here
     });
 

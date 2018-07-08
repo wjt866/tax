@@ -1,120 +1,38 @@
 <div fxLayout="row" fxLayoutAlign="center center" >
 
-  <!--[(ngModel)]="tax.income"-->
-
-  <form class="form">
-    <p>
-      Enter Gross Income or Income with super
-    </p>
-    <p>
-      <mat-form-field appearance="legacy">
-        <mat-label>Super Annuation %</mat-label>
-        <input matInput placeholder="Enter Super Annuation %" type="number" #superPercentage>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="standard">
-        <mat-label>Gross Income</mat-label>
-        <input matInput type="number" placeholder="Enter Gross Income" #gross/>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="standard">
-        <mat-label>Income + Superannuation</mat-label>
-        <input matInput type="number" placeholder="Income Gross + Superannuation" #grossWithSuper/>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="standard">
-        <mat-label>Financial year</mat-label>
-        <input matInput type="number" placeholder="Enter Financial year" #finyear/>
-      </mat-form-field>
-    </p>
-    <button mat-raised-button
-            (click)="calculateTax(superPercentage.value, grossWithSuper.value, gross.value, finyear.value)"
-            type="submit"
-    >Calculate
-    </button>
-
-  </form>
-
   <form class="form" (ngSubmit)="onSubmit()">
-    <!--class="full-width"-->
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <input matInput
              type="number"
              placeholder="Superannuation (%):"
              value=9.5
-             #super
-      />
+             #super/>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <input matInput
              type="number"
              placeholder="Income Amount:"
-             #income
-      />
+             #income/>
     </mat-form-field>
 
-    <mat-radio-group type="number" >
-      <mat-radio-button value="0" #gross>Gross</mat-radio-button><br/><br/>
-      <mat-radio-button value="1" #gross>Gross AND Super</mat-radio-button>
+    <mat-radio-group class="full-width">
+      <mat-radio-button (click)="onSelectGross(0)" value="0">Gross</mat-radio-button><br/><br/>
+      <mat-radio-button (click)="onSelectGross(1)" value="1">Gross AND Super</mat-radio-button>
     </mat-radio-group>
 
-    <mat-form-field>
-      <mat-select placeholder="Tax Rates Year:" #year>
-        <mat-option *ngFor="let year of Years">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Tax Rates Year:">
+        <mat-option (click)="onSelectYear(year)" *ngFor="let year of Years">
           {{year}}
         </mat-option>
       </mat-select>
     </mat-form-field><br/><br/>
 
-    <!--type="submit" -->
-
     <button mat-raised-button
-           (click)="calculateTax(super.value, income.value, gross.value, year.value)"
-           type="submit"
-    >Calculate
+           (click)="calculateTax(super.value, income.value)"
+           type="submit">
+      Calculate
     </button>
     <button mat-button [routerLink]="['/dash']">View tax history</button>
   </form>
-
 </div>
-
-<!--remove br br-->
-
-<!--<form class="form" (ngSubmit)="onSubmit()">-->
-  <!--<mat-form-field class="full-width">-->
-    <!--<input matInput-->
-           <!--(ngModel)="tax.super"-->
-           <!--value=9.5-->
-           <!--placeholder="Superannuation (%):"/>-->
-  <!--</mat-form-field>-->
-  <!--<br/>-->
-
-  <!--<mat-form-field class="full-width">-->
-    <!--<input matInput-->
-           <!--(ngModel)="tax.income"-->
-           <!--placeholder="Income Amount:">-->
-  <!--</mat-form-field>-->
-
-  <!--<mat-radio-group (ngModel)="tax.gross">-->
-    <!--<mat-radio-button value="0">Gross</mat-radio-button><br/><br/>-->
-    <!--<mat-radio-button value="1">Gross AND Super</mat-radio-button>-->
-  <!--</mat-radio-group><br/><br/>-->
-
-  <!--<mat-form-field>-->
-    <!--<mat-select-->
-      <!--placeholder="Tax Rates Year:">-->
-      <!--<mat-option-->
-        <!--*ngFor="let year of Years"-->
-        <!--[value]="year"-->
-        <!--(ngModel)="tax.year">-->
-        <!--{{year}}-->
-      <!--</mat-option>-->
-    <!--</mat-select>-->
-  <!--</mat-form-field><br/><br/>-->
-
-
-<!--<button type="submit" mat-button>Submit</button>-->
-<!--<button mat-button [routerLink]="['/dash']">View tax history</button>-->

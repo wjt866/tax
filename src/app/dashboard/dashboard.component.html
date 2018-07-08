@@ -6,40 +6,56 @@
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Position Column -->
     <ng-container matColumnDef="year">
-      <th mat-header-cell *matHeaderCellDef> Year (Ending June 30) </th>
+      <th mat-header-cell *matHeaderCellDef> Year </th>
       <td mat-cell *matCellDef="let element"> {{element.year}} </td>
     </ng-container>
 
-    <!-- Name Column -->
+    <ng-container matColumnDef="superPercentage">
+      <th mat-header-cell *matHeaderCellDef> Super (%) </th>
+      <td mat-cell *matCellDef="let element"> {{element.superPercentage}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="super">
-      <th mat-header-cell *matHeaderCellDef> Super </th>
+      <th mat-header-cell *matHeaderCellDef> Super Amount </th>
       <td mat-cell *matCellDef="let element"> {{element.super}} </td>
     </ng-container>
 
-    <!-- Income Column -->
     <ng-container matColumnDef="income">
       <th mat-header-cell *matHeaderCellDef> Income </th>
-      <td mat-cell *matCellDef="let element"> {{element.tax}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.income}} </td>
     </ng-container>
 
-    <!-- Tax Column -->
-    <ng-container matColumnDef="tax">
-      <th mat-header-cell *matHeaderCellDef> Tax Paid </th>
+    <ng-container matColumnDef="gross">
+      <th mat-header-cell *matHeaderCellDef> Gross </th>
       <td mat-cell *matCellDef="let element"> {{element.gross}} </td>
     </ng-container>
 
-    <!--&lt;!&ndash; Delete Column &ndash;&gt;-->
-    <!--<ng-container matColumnDef="delete">-->
-    <!--<th mat-header-cell *matHeaderCellDef> Delete </th>-->
-    <!--<td mat-cell *matCellDef="let element"> <button>Delete</button> </td>-->
-    <!--</ng-container>-->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Gross Type </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.type==0"> Gross & Super</div>
+        <div *ngIf="element.type==1"> Gross </div>
+    </ng-container>
+
+    <ng-container matColumnDef="tax">
+      <th mat-header-cell *matHeaderCellDef> Tax Amount </th>
+      <td mat-cell *matCellDef="let element"> {{element.tax}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="net">
+      <th mat-header-cell *matHeaderCellDef> Net Amount </th>
+      <td mat-cell *matCellDef="let element"> {{element.net}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="netPlusSuper">
+      <th mat-header-cell *matHeaderCellDef> Net + Super Amount </th>
+      <td mat-cell *matCellDef="let element"> {{element.netPlusSuper}} </td>
+    </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
   </table>
+
 </div>
