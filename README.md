@@ -1,5 +1,10 @@
 # FrontSrc
 
+A basic tax calculator front end application. Please see [here](https://github.com/wjt866/tax-calc-nestjs) for the backend to this project.
+
+![Screenshot](add-data.png)
+![Screenshot](view-data.png)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server
