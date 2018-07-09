@@ -29,7 +29,6 @@ export class ApiService {
   submitData(data) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      // Auth headers here
     });
 
     return this.http.post(
@@ -40,10 +39,6 @@ export class ApiService {
   }
 
   getData() {
-    const headers = new HttpHeaders({
-      // Auth headers here
-    });
-
     return this.http.get(
       `${environment.apiEndpoint}/tax-records`
     );

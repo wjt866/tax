@@ -11,7 +11,7 @@ import {SubmitIncomeDto} from './submit-income-dto';
 })
 export class AddDataComponent implements OnInit {
 
-  tax: SubmitIncomeDto = new SubmitIncomeDto(); // remove
+  tax: SubmitIncomeDto = new SubmitIncomeDto();
   Years = [2012, 2013, 2014, 2015, 2016, 2017, 2018];
   gross: number;
   year: number;
@@ -26,7 +26,7 @@ export class AddDataComponent implements OnInit {
 
   calculateTax(superAnnuation, income) {
     const body: SubmitIncomeDto = {
-      email: 'demo@email.com', // test account
+      email: 'demo2@email.com',
       superPercentage: parseFloat(superAnnuation),
       income: income,
       type: this.gross,
@@ -36,9 +36,6 @@ export class AddDataComponent implements OnInit {
       .subscribe((result) => {
         this.router.navigate(['dash']);
       });
-
-    //
-
   }
 
   onSelectGross(number) {
