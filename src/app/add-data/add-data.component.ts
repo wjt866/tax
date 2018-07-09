@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {FormGroup, Validators, FormControl} from '@angular/forms';
 import { ApiService } from '../api.service';
 import {SubmitIncomeDto} from './submit-income-dto';
 
@@ -11,6 +11,7 @@ import {SubmitIncomeDto} from './submit-income-dto';
 })
 export class AddDataComponent implements OnInit {
 
+  addData: FormGroup;
   tax: SubmitIncomeDto = new SubmitIncomeDto();
   Years = [2012, 2013, 2014, 2015, 2016, 2017, 2018];
   gross: number;
@@ -22,28 +23,38 @@ export class AddDataComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.addData = new FormGroup({
+      super: new FormControl('9.5', [
+        Validators.required,
+        Validators.min(9.5),
+      ]),
+      income: new FormControl('', [
+        Validators.required,
+      ]),
+      gross: new FormControl('', [
+        Validators.required,
+      ]),
+      year: new FormControl('', [
+        Validators.required,
+      ])
+    });
   }
 
-  calculateTax(superAnnuation, income) {
-    const body: SubmitIncomeDto = {
-      email: 'demo2@email.com',
-      superPercentage: parseFloat(superAnnuation),
-      income: income,
-      type: this.gross,
-      year: this.year,
-    };
-    this.api.submitData(JSON.stringify(body))
-      .subscribe((result) => {
-        this.router.navigate(['dash']);
-      });
-  }
+  calculateTax() {
+    if (this.addData.valid) {
+      const body: SubmitIncomeDto = {
+        email: 'demo2@email.com',
+        superPercentage: +this.addData.value.super,
+        income: +this.addData.value.income,
+        type: +this.addData.value.gross,
+        year: +this.addData.value.year,
+      };
+      this.api.submitData(JSON.stringify(body))
+        .subscribe(() => {
+          this.router.navigate(['dash']);
+        });
+    }
 
-  onSelectGross(number) {
-    this.gross = number;
-  }
-
-  onSelectYear(year) {
-    this.year = year;
   }
 
 }

@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -39,6 +40,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     // Angular Material Components
     MatFormFieldModule,
     MatInputModule,

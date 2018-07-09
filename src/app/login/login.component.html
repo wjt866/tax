@@ -1,22 +1,23 @@
 
 <div fxLayout="row" fxLayoutAlign="center center" >
 
-  <form class="example-form">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="example-form" novalidate>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Email:">
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
+      <input formControlName="emailFormControl" placeholder="Email:" matInput>
+      <mat-error *ngIf="loginForm.controls.emailFormControl.invalid">
+        Please enter a <strong>valid</strong> email address
       </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
+
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput type="password" placeholder="Password:">
+      <input matInput formControlName="passwordFormControl" type="password" placeholder="Password:">
+      <mat-error *ngIf="loginForm.controls.passwordFormControl.invalid">
+        Password is <strong>required</strong> (8 characters min)
+      </mat-error>
     </mat-form-field>
 
-    <button mat-button>Submit</button>
+    <button mat-raised-button type="submit"> Submit </button>
 
   </form>
 

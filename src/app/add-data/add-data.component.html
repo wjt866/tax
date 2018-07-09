@@ -1,38 +1,47 @@
 <div fxLayout="row" fxLayoutAlign="center center" >
 
-  <form class="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="addData" class="form" (ngSubmit)="calculateTax()">
+
     <mat-form-field class="full-width">
       <input matInput
              type="number"
              placeholder="Superannuation (%):"
              value=9.5
-             #super/>
+             formControlName="super"/>
+      <mat-error *ngIf="addData.controls.year.invalid">
+        Superannuation is required (min 9.5%)
+      </mat-error>
     </mat-form-field>
+
     <mat-form-field class="full-width">
       <input matInput
              type="number"
              placeholder="Income Amount:"
-             #income/>
+             formControlName="income"/>
+      <mat-error *ngIf="addData.controls.income.invalid">
+        Income is required
+      </mat-error>
     </mat-form-field>
 
-    <mat-radio-group class="full-width">
-      <mat-radio-button (click)="onSelectGross(0)" value="0">Gross</mat-radio-button><br/><br/>
-      <mat-radio-button (click)="onSelectGross(1)" value="1">Gross AND Super</mat-radio-button>
+    <mat-radio-group formControlName="gross" class="full-width">
+      <mat-radio-button value="0">Gross</mat-radio-button><br/><br/>
+      <mat-radio-button value="1">Gross AND Super</mat-radio-button><br/>
     </mat-radio-group>
 
     <mat-form-field class="full-width">
-      <mat-select placeholder="Tax Rates Year:">
-        <mat-option (click)="onSelectYear(year)" *ngFor="let year of Years">
+      <mat-select formControlName="year" placeholder="Tax Rates Year:">
+        <mat-option *ngFor="let year of Years" [value]="year">
           {{year}}
         </mat-option>
       </mat-select>
-    </mat-form-field><br/><br/>
+      <mat-error *ngIf="addData.controls.year.invalid">
+        A year is required
+      </mat-error>
+    </mat-form-field>
 
-    <button mat-raised-button
-           (click)="calculateTax(super.value, income.value)"
-           type="submit">
-      Calculate
-    </button>
+    <button mat-raised-button type="submit"> Submit </button>
     <button mat-button [routerLink]="['/dash']">View tax history</button>
+
   </form>
+
 </div>

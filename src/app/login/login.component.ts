@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 
@@ -10,10 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  loginForm: FormGroup;
 
   constructor(
     private api: ApiService,
@@ -21,17 +18,28 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loginForm = new FormGroup({
+      emailFormControl: new FormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
+      passwordFormControl: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8)
+      ])
+    });
   }
 
-  submit(credentials) {
-    this.api.signIn(credentials)
-      .subscribe((token) => {
-        if (token) {
-          // save token
-          // then
-          this.router.navigate(['dash']);
-        }
-      });
+  onSubmit() {
+    if (this.loginForm.valid) {
+      this.api.signIn(this.loginForm.value)
+        .subscribe((token: any) => {
+          if (token) {
+            window.localStorage.setItem('token', token.token);
+            this.router.navigate(['dash']);
+          }
+        });
+    }
   }
 
 
